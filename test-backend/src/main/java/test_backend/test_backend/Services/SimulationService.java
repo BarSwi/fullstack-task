@@ -15,13 +15,16 @@ import java.util.stream.Collectors;
 @Service
 public class SimulationService {
     private final SimulationRepository simulationRepository;
+    private final DailyResultService dailyResultService;
 
 
 
     public SimulationDto addSimulation(SimulationDto simulationDto){
         //TODO: Implement validation logic
-
+        // Ts > Tm
+        // M między 0 i 1
         Simulation simulation = simulationRepository.save(dtoToEntity(simulationDto));
+        dailyResultService.calculateResults(simulation);
         return entityToDto(simulation);
     }
 
