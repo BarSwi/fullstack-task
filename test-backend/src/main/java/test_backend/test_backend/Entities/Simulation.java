@@ -27,6 +27,6 @@ public class Simulation {
     private int Tm;
     private int Ts;
 
-    @OneToMany
+    @OneToMany(mappedBy = "simulation", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DailyResult> results;
 }

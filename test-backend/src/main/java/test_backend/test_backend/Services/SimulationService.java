@@ -35,9 +35,31 @@ public class SimulationService {
                 .toList();
     }
 
+    public void deleteSimulation(long id){
+        simulationRepository.deleteByID(id);
+    }
+
+    public SimulationDto editSimulation(long id, SimulationDto simulationDto){
+        Optional<Simulation> optionalSim = simulationRepository.findById(id);
+        if(optionalSim.isPresent()){
+            Simulation simulation = optionalSim.get();
+            simulation.setN(simulationDto.N());
+            simulation.setP(simulationDto.P());
+            simulation.setI(simulationDto.I());
+            simulation.setR(simulationDto.R());
+            simulation.setM(simulationDto.M());
+            simulation.setTi(simulationDto.Ti());
+            simulation.setTm(simulationDto.Tm());
+            simulation.setTs(simulationDto.Ts());
+            dailyResultService.calculateResults(simulation);
+            simulationRepository.save(simulation);
+            return entityToDto(simulation);
+        }
+
+        return null;
+    }
     private Simulation dtoToEntity(SimulationDto simulationDto){
         return  Simulation.builder()
-                .ID(simulationDto.ID().orElse(null))
                 .N(simulationDto.N())
                 .P(simulationDto.P())
                 .I(simulationDto.I())
@@ -51,7 +73,6 @@ public class SimulationService {
 
     private SimulationDto entityToDto(Simulation simulation){
         return new SimulationDto(
-                Optional.ofNullable(simulation.getID()),
                 simulation.getN(),
                 simulation.getP(),
                 simulation.getI(),

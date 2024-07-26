@@ -17,7 +17,7 @@ public class DailyResultService {
     private Queue<Integer> recoverQueue;
     private List<DailyResult> list;
 
-    public List<DailyResult> calculateResults(Simulation simulation){
+    public void calculateResults(Simulation simulation){
         initializeIterables(simulation.getTi(), simulation.getTm());
         dailyResultRepository.deleteBySimulationID(simulation.getID());
         list.add(createBaseDailyResult(simulation));
@@ -34,7 +34,6 @@ public class DailyResultService {
             list.add(createDailyResult(Pv,Pi,Pr,Pm,simulation));
         }
         dailyResultRepository.saveAllAndFlush(list);
-        return list;
     }
     private void initializeIterables(int Ti, int Tm){
         list = new ArrayList<>();

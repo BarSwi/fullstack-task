@@ -1,10 +1,7 @@
 package test_backend.test_backend;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.filter.RequestContextFilter;
 import test_backend.test_backend.Dto.SimulationDto;
 import test_backend.test_backend.Entities.Simulation;
@@ -26,5 +23,15 @@ public class Controller {
     @GetMapping("simulation/getAll")
     List<SimulationDto> getSimulations(){
         return simulationService.getAll();
+    }
+
+    @DeleteMapping("simulation/deleteSimulation")
+    void deleteSimulation(@RequestParam long id){
+        simulationService.deleteSimulation(id);
+    }
+
+    @PutMapping("simulation/editSimulation")
+    SimulationDto editSimulation(@RequestParam long id, @RequestBody SimulationDto requestDto){
+        return simulationService.editSimulation(id, requestDto);
     }
 }
