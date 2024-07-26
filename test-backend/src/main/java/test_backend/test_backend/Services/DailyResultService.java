@@ -17,26 +17,24 @@ public class DailyResultService {
     private Queue<Integer> recoverQueue;
     private List<DailyResult> list;
 
-    public void calculateResults(Simulation simulation){
+    public List<DailyResult> calculateResults(Simulation simulation){
         initializeIterables(simulation.getTi(), simulation.getTm());
         dailyResultRepository.deleteBySimulationID(simulation.getID());
         list.add(createBaseDailyResult(simulation));
 
         for(int i = 1; i < simulation.getTs(); i++){
             DailyResult previousResult = list.get(i-1);
-            int Pr = recoverQueue.isEmpty() ? 0 : recoverQueue.poll() + previousResult.getPr();
-            int Pm = deathsQueue.isEmpty() ? 0 : deathsQueue.poll();
-            Pm = (int) Math.floor(Pm * simulation.getM() + previousResult.getPm());
-            int PiMax = previousResult.getPi() * (1 + simulation.getR());
-            int Pi = PiMax >= previousResult.getPv() ? simulation.getP() - Pr - Pm : PiMax - Pr - Pm;
-            int Pv = simulation.getP() - Pi - Pr - Pm;
-            int PiDifference = Math.max(Pi - previousResult.getPi(), 0);
+            int Pr = calculatePr(previousResult);
+            int Pm = calculatePm(previousResult, simulation);
+            int Pi = calculatePi(previousResult, simulation, Pr, Pm);
+            int Pv = calculatePv(simulation, Pi, Pr, Pm);
 
+            int PiDifference = Math.max(Pi - previousResult.getPi(), 0);
             addToQueues(simulation.getM(), PiDifference);
             list.add(createDailyResult(Pv,Pi,Pr,Pm,simulation));
         }
-
         dailyResultRepository.saveAllAndFlush(list);
+        return list;
     }
     private void initializeIterables(int Ti, int Tm){
         list = new ArrayList<>();
@@ -68,5 +66,23 @@ public class DailyResultService {
     private void addToQueues(float M, int value){
         deathsQueue.add(value);
         recoverQueue.add(value - (int) (value * M));
+    }
+
+    private int calculatePr(DailyResult previousResult){
+        return recoverQueue.isEmpty() ? 0 : recoverQueue.poll() + previousResult.getPr();
+    }
+
+    private int calculatePm(DailyResult previousResult, Simulation simulation){
+        int Pm = deathsQueue.isEmpty() ? 0 : deathsQueue.poll();
+        return (int) Math.floor(Pm * simulation.getM() + previousResult.getPm());
+    }
+
+    private int calculatePi(DailyResult previousResult, Simulation simulation, int Pr, int Pm){
+        int PiMax = previousResult.getPi() * (1 + simulation.getR());
+        return PiMax >= previousResult.getPv() ? simulation.getP() - Pr - Pm : PiMax - Pr - Pm;
+    }
+
+    private int calculatePv(Simulation simulation, int Pi, int Pr, int Pm){
+        return simulation.getP() - Pi - Pr - Pm;
     }
 }
