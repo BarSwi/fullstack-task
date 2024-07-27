@@ -3,7 +3,6 @@ version: '3.8'
 
 services:
   app:
-    image: your-image-name 
     build:
       context: ../test-backend
       dockerfile: Dockerfile
@@ -11,6 +10,7 @@ services:
       - "8081:8081"
     environment:
       - SPRING_PROFILES_ACTIVE=dev
+      - PORT=8081
     depends_on:
       - db 
 

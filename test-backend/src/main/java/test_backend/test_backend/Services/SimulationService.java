@@ -1,11 +1,14 @@
 package test_backend.test_backend.Services;
 
+import com.fasterxml.jackson.databind.exc.ValueInstantiationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import test_backend.test_backend.Dto.SimulationDto;
 import test_backend.test_backend.Entities.Simulation;
+import test_backend.test_backend.Errors.ValidationErrorsCombined;
 import test_backend.test_backend.Repositories.SimulationRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,9 +23,8 @@ public class SimulationService {
 
 
     public SimulationDto addSimulation(SimulationDto simulationDto){
-        //TODO: Implement validation logic
-        // Ts > Tm
-        // M między 0 i 1
+        validation(simulationDto);
+
         Simulation simulation = simulationRepository.save(dtoToEntity(simulationDto));
         dailyResultService.calculateResults(simulation);
         return entityToDto(simulation);
@@ -40,6 +42,8 @@ public class SimulationService {
     }
 
     public SimulationDto editSimulation(long id, SimulationDto simulationDto){
+        validation(simulationDto);
+
         Optional<Simulation> optionalSim = simulationRepository.findById(id);
         if(optionalSim.isPresent()){
             Simulation simulation = optionalSim.get();
@@ -82,5 +86,25 @@ public class SimulationService {
                 simulation.getTm(),
                 simulation.getTs()
         );
+    }
+
+    private void validation(SimulationDto simulationDto) throws ValidationErrorsCombined {
+        List<String> errors = new ArrayList<>();
+
+        // Main validation
+        if(simulationDto.I() <= 0 ) errors.add("Liczba osób zakażonych musi być większa od 0 i liczbą całkowitą");
+        if(simulationDto.R() <= 0 ) errors.add("Współczynnik R musi być większy od 0 i liczbą całkowitą");
+        if(simulationDto.P() <= 0) errors.add("Populacja musi być większa od 0 i liczbą całkowitą");
+        if(simulationDto.N().isBlank()) errors.add("Nazwa nie może być pusta");
+        if(simulationDto.M() <= 0.0 || simulationDto.M() > 1.0) errors.add("Współczynnik M musi się zawierać między 0 i 1");
+        if(simulationDto.Ti() < 1) errors.add("Czas do wyzdrowienia (w dniach) musi być większy od 0 i liczbą całkowitą");
+        if(simulationDto.Tm() < 1) errors.add("Czas do śmierci (w dniach) musi być większy od 0 i liczbą całkowitą" );
+        if(simulationDto.Ts() < 1) errors.add("Czas symulacji (w dniach) musi być większy od 0 i liczbą całkowitą");
+
+        //Detailed validation
+        if(simulationDto.Ti() <= simulationDto.Tm()) errors.add("Czas do wyzdrowienia powinien być większy niż czas do śmierci (w przeciwnie skrajnym wypadku symulacja nie ma sensu)");
+        if(simulationDto.I() > simulationDto.P()) errors.add("Liczba osób zakażonych nie może być większa  niż cała populacja");
+
+        if(!errors.isEmpty()) throw new ValidationErrorsCombined(errors);
     }
 }
