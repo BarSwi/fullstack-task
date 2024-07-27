@@ -18,11 +18,11 @@ public class Simulation {
 
 
     private String N;
-    private int P;
-    private int I;
+    private long P;
+    private long I;
 
     private int R;
-    private float M;
+    private double M;
     private int Ti;
     private int Tm;
     private int Ts;

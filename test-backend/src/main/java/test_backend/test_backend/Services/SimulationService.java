@@ -90,6 +90,7 @@ public class SimulationService {
 
     private void validation(SimulationDto simulationDto) throws ValidationErrorsCombined {
         List<String> errors = new ArrayList<>();
+        final long maxValue = 900000000000000L;
 
         // Main validation
         if(simulationDto.I() <= 0 ) errors.add("Liczba osób zakażonych musi być większa od 0 i liczbą całkowitą");
@@ -104,6 +105,7 @@ public class SimulationService {
         //Detailed validation
         if(simulationDto.Ti() <= simulationDto.Tm()) errors.add("Czas do wyzdrowienia powinien być większy niż czas do śmierci (w przeciwnie skrajnym wypadku symulacja nie ma sensu)");
         if(simulationDto.I() > simulationDto.P()) errors.add("Liczba osób zakażonych nie może być większa  niż cała populacja");
+        if(simulationDto.P() > maxValue) errors.add("Liczba populacji nie może być większa niż: " + maxValue);
 
         if(!errors.isEmpty()) throw new ValidationErrorsCombined(errors);
     }

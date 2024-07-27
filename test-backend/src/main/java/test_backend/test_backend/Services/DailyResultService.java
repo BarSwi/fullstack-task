@@ -13,8 +13,8 @@ import java.util.*;
 public class DailyResultService {
     private final DailyResultRepository dailyResultRepository;
 
-    private Queue<Integer> deathsQueue;
-    private Queue<Integer> recoverQueue;
+    private Queue<Long> deathsQueue;
+    private Queue<Long> recoverQueue;
     private List<DailyResult> list;
 
     public void calculateResults(Simulation simulation){
@@ -24,12 +24,12 @@ public class DailyResultService {
 
         for(int i = 1; i < simulation.getTs(); i++){
             DailyResult previousResult = list.get(i-1);
-            int Pr = calculatePr(previousResult);
-            int Pm = calculatePm(previousResult, simulation);
-            int Pi = calculatePi(previousResult, simulation, Pr, Pm);
-            int Pv = calculatePv(simulation, Pi, Pr, Pm);
+            long Pr = calculatePr(previousResult);
+            long Pm = calculatePm(previousResult, simulation);
+            long Pi = calculatePi(previousResult, simulation, Pr, Pm);
+            long Pv = calculatePv(simulation, Pi, Pr, Pm);
 
-            int numberOfInfected = Math.abs(previousResult.getPv() - Pv);
+            long numberOfInfected = Math.abs(previousResult.getPv() - Pv);
             addToQueues(simulation.getM(), numberOfInfected);
             list.add(createDailyResult(Pv,Pi,Pr,Pm,simulation));
         }
@@ -39,8 +39,8 @@ public class DailyResultService {
         list = new ArrayList<>();
         recoverQueue = new ArrayDeque<>(Ti);
         deathsQueue = new ArrayDeque<>(Tm);
-        recoverQueue.addAll(Collections.nCopies(Ti-1, 0));
-        deathsQueue.addAll(Collections.nCopies(Tm-1, 0));
+        recoverQueue.addAll(Collections.nCopies(Ti-1, 0L));
+        deathsQueue.addAll(Collections.nCopies(Tm-1, 0L));
     }
 
     private DailyResult createBaseDailyResult(Simulation simulation){
@@ -52,7 +52,7 @@ public class DailyResultService {
                 .build();
     }
 
-    private DailyResult createDailyResult(int Pv, int Pi, int Pr, int Pm, Simulation simulation){
+    private DailyResult createDailyResult(long Pv, long Pi, long Pr, long Pm, Simulation simulation){
         return DailyResult.builder()
                 .Pv(Pv)
                 .Pi(Pi)
@@ -62,28 +62,28 @@ public class DailyResultService {
                 .build();
     }
 
-    private void addToQueues(float M, int value){
+    private void addToQueues(double M, long value){
         deathsQueue.add(value);
-        recoverQueue.add(value - (int) (value * M));
+        recoverQueue.add(value - Math.round(value * M));
     }
 
-    private int calculatePr(DailyResult previousResult){
+    private long calculatePr(DailyResult previousResult){
         return recoverQueue.isEmpty() ? 0 : recoverQueue.poll() + previousResult.getPr();
     }
 
-    private int calculatePm(DailyResult previousResult, Simulation simulation){
-        int Pm = deathsQueue.isEmpty() ? 0 : deathsQueue.poll();
-        return (int) Math.floor(Pm * simulation.getM() + previousResult.getPm());
+    private long calculatePm(DailyResult previousResult, Simulation simulation){
+        long Pm = deathsQueue.isEmpty() ? 0 : deathsQueue.poll();
+        return Math.round(Pm * simulation.getM() + previousResult.getPm());
     }
 
-    private int calculatePi(DailyResult previousResult, Simulation simulation, int Pr, int Pm){
-        int PiMax = previousResult.getPi() * simulation.getR();
-        int PiValidResult = PiMax + previousResult.getPi() - Pr - Pm;
+    private long calculatePi(DailyResult previousResult, Simulation simulation, long Pr, long Pm){
+        long PiMax = previousResult.getPi() * simulation.getR();
+        long PiValidResult = PiMax + previousResult.getPi() - Pr - Pm;
 
         return PiMax < previousResult.getPv() ? PiValidResult : simulation.getP() - Pr - Pm;
     }
 
-    private int calculatePv(Simulation simulation, int Pi, int Pr, int Pm){
+    private long calculatePv(Simulation simulation, long Pi, long Pr, long Pm){
         return simulation.getP() - Pi - Pr - Pm;
     }
 }

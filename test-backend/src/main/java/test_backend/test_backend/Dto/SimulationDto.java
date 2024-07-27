@@ -4,10 +4,10 @@ import java.util.Optional;
 
 public record SimulationDto(
         String N,
-        int P,
-        int I,
+        long P,
+        long I,
         int R,
-        float M,
+        double M,
         int Ti,
         int Tm,
         int Ts
