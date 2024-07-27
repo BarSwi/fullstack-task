@@ -29,8 +29,8 @@ public class DailyResultService {
             int Pi = calculatePi(previousResult, simulation, Pr, Pm);
             int Pv = calculatePv(simulation, Pi, Pr, Pm);
 
-            int PiDifference = Math.max(Pi - previousResult.getPi(), 0);
-            addToQueues(simulation.getM(), PiDifference);
+            int numberOfInfected = Math.abs(previousResult.getPv() - Pv);
+            addToQueues(simulation.getM(), numberOfInfected);
             list.add(createDailyResult(Pv,Pi,Pr,Pm,simulation));
         }
         dailyResultRepository.saveAllAndFlush(list);
@@ -39,8 +39,8 @@ public class DailyResultService {
         list = new ArrayList<>();
         recoverQueue = new ArrayDeque<>(Ti);
         deathsQueue = new ArrayDeque<>(Tm);
-        recoverQueue.addAll(Collections.nCopies(Ti, 0));
-        deathsQueue.addAll(Collections.nCopies(Tm, 0));
+        recoverQueue.addAll(Collections.nCopies(Ti-1, 0));
+        deathsQueue.addAll(Collections.nCopies(Tm-1, 0));
     }
 
     private DailyResult createBaseDailyResult(Simulation simulation){
@@ -77,8 +77,10 @@ public class DailyResultService {
     }
 
     private int calculatePi(DailyResult previousResult, Simulation simulation, int Pr, int Pm){
-        int PiMax = previousResult.getPi() * (1 + simulation.getR());
-        return PiMax >= previousResult.getPv() ? simulation.getP() - Pr - Pm : PiMax - Pr - Pm;
+        int PiMax = previousResult.getPi() * simulation.getR();
+        int PiValidResult = PiMax + previousResult.getPi() - Pr - Pm;
+
+        return PiMax < previousResult.getPv() ? PiValidResult : simulation.getP() - Pr - Pm;
     }
 
     private int calculatePv(Simulation simulation, int Pi, int Pr, int Pm){
