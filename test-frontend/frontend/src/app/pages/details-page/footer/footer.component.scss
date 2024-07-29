@@ -1,4 +1,13 @@
 #daily-results-footer{
+        
+    display: flex;
+    justify-content: center;
+    gap:30px;
+    -webkit-box-shadow: 0px -1px 15px -3px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 0px -1px 15px -3px rgba(66, 68, 90, 1);
+    box-shadow: 0px -1px 15px -3px rgba(66, 68, 90, 1);
+    border-radius: 5px;
+    padding: 10px;
     .return-link {
         //Zmienne z mat-button w celu normalizacji
         display: inline-block;
@@ -25,9 +34,6 @@
         box-shadow: 0px 2px 10px -3px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
     }
 
-    display: flex;
-    justify-content: center;
-    gap:30px;
 }
 
 @media screen and (max-width: 450px){

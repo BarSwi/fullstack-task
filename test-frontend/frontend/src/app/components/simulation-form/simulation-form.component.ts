@@ -64,7 +64,7 @@ export class SimulationFormComponent {
       P: [this.defaultValues.P, [checkIfNumber(), checkMinimumValue(1)]],
       I: [this.defaultValues.I, [checkIfNumber(), checkMinimumValue(1)]],
       R: [this.defaultValues.R, [checkIfNumber(), checkMinimumValue(1), checkMaximumValue(2147483646)]],
-      M: [this.defaultValues.M, [checkIfNumber(), checkMinimumValue(0), checkMaximumValue(1.1)]],
+      M: [this.defaultValues.M, [checkIfNumber(), checkMinimumValue(0), checkMaximumValue(1)]],
       Ti: [this.defaultValues.Ti, [checkIfNumber(), checkMinimumValue(2), checkMaximumValue(2147483646)]],
       Tm: [this.defaultValues.Tm, [checkIfNumber(), checkMinimumValue(1), checkMaximumValue(2147483646)]],
       Ts: [this.defaultValues.Ts, [checkIfNumber(), checkMinimumValue(1), checkMaximumValue(2147483646)]],
@@ -94,7 +94,7 @@ export class SimulationFormComponent {
     });
   }
 
-  
+
   createObjectBasedOnForm(form: FormGroup): SimulationWithoutID {
     return Object.keys(form.controls).reduce((acc, key) => {
       acc[key as keyof SimulationWithoutID] = form.get(key)?.value;
