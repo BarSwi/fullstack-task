@@ -88,6 +88,8 @@
             <mat-error *ngIf="form.get('Ti')?.hasError('minValueError')">
                 Ti musi być większe od 1 (ze względu na Tm)
             </mat-error>
+
+            <!-- Notatka dla mnie -> mat-error działa TYLKO na specyficzne pola nie na cały formularz -->
             <mat-error *ngIf="form.get('Ti')?.hasError('TmLowerThanTiError')">
                 Tm musi być większe od Ti
             </mat-error>
