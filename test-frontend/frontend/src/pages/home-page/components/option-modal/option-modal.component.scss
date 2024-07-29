@@ -1,0 +1,39 @@
+#option-modal{
+    width: 30vw;
+    min-width: max-content;
+    background-color: white;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;  
+    padding: 2rem;
+    border-radius: 30px;
+    position: fixed;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-box-shadow: 1px 1px 10px 0px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 1px 1px 10px 0px rgba(66, 68, 90, 1);
+    box-shadow: 1px 1px 10px 0px rgba(66, 68, 90, 1);
+
+    button{
+        text-wrap: wrap;
+        box-sizing: border-box;
+        min-width: 30px;
+    }
+    #delete-btn{
+        color: rgb(209, 26, 26);
+
+        &:hover{
+            background-color: rgb(243, 216, 216);
+        }
+    }
+
+}
+
+@media (max-width: 700px){
+    #option-modal{
+        flex-direction: column;
+        gap: 30px;
+    }
+}

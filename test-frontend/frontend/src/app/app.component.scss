@@ -1,0 +1,36 @@
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+  
+.row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.col-1 {
+    flex: 0;
+}
+
+.col {
+    flex: 1;
+}
+
+.col-1, .col {
+    padding: 1rem;
+}
+
+@media (max-width: 768px) {
+    .row {
+        flex-direction: column;
+    }
+
+    .col-1 {
+        flex: 1;
+        margin-bottom: 1rem;
+    }
+}
+  

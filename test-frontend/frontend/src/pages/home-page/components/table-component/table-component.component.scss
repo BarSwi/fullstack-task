@@ -1,0 +1,25 @@
+#data-table{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    overflow: auto;
+    table{
+        width: 100%;
+        min-width: 700px;
+        td, th{ 
+            word-break: break-all;
+            text-align: center;
+        }
+        tr{
+
+            &:hover{
+                cursor: pointer;
+            }
+            &.selected{
+                background-color: rgb(220, 238, 245);
+            }
+        }
+    }
+
+
+}

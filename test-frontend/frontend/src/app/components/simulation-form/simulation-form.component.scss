@@ -1,0 +1,40 @@
+#simulation-form{
+    
+    width: 100%;
+    form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    #title{
+        font-size: 1.2rem;
+        margin-bottom: 25px;
+        font-weight: bold;
+    }
+    mat-form-field{
+        width: 90%;
+        margin-bottom: 20px;
+        mat-hint{
+            color: rgb(119, 119, 184);
+        }
+    }
+    .button{
+        margin-bottom: 15px;
+    }
+    .mat-mdc-unelevated-button{
+        width: 50%;
+        padding: 10px 0;
+        &:not(:disabled){
+            background-color: rgb(119, 119, 184);
+            transition: .3s ease;
+            &:hover, &:focus{
+                transform: scale(1.1);
+            }
+        }
+
+    }
+
+    .mat-mdc-form-field-error{
+        padding-bottom: 10px;
+    }
+}

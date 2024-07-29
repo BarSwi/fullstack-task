@@ -1,0 +1,9 @@
+<app-table-component  (rowClicked)="onRowClicked($event)" [selectedSimulation]="selectedSimulation"></app-table-component>
+@if (selectedSimulation){ <app-option-modal (cancelClicked)="resetSelection()" [selectedSimulation]="selectedSimulation" @fadeIn></app-option-modal> } 
+@if (!showCreationForm){
+    <span id = "simulation-form-container"></span>
+    <div id="simulation-form-popup">
+        <app-simulation-form></app-simulation-form>
+    </div>
+}
+

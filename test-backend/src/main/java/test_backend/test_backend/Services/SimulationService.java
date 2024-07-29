@@ -77,6 +77,7 @@ public class SimulationService {
 
     private SimulationDto entityToDto(Simulation simulation){
         return new SimulationDto(
+                simulation.getID(),
                 simulation.getN(),
                 simulation.getP(),
                 simulation.getI(),
@@ -97,7 +98,7 @@ public class SimulationService {
         if(simulationDto.R() <= 0 ) errors.add("Współczynnik R musi być większy od 0 i liczbą całkowitą");
         if(simulationDto.P() <= 0) errors.add("Populacja musi być większa od 0 i liczbą całkowitą");
         if(simulationDto.N().isBlank()) errors.add("Nazwa nie może być pusta");
-        if(simulationDto.M() <= 0.0 || simulationDto.M() > 1.0) errors.add("Współczynnik M musi się zawierać między 0 i 1");
+        if(simulationDto.M() < 0.0 || simulationDto.M() > 1.0) errors.add("Współczynnik M musi się zawierać między 0 i 1");
         if(simulationDto.Ti() < 1) errors.add("Czas do wyzdrowienia (w dniach) musi być większy od 0 i liczbą całkowitą");
         if(simulationDto.Tm() < 1) errors.add("Czas do śmierci (w dniach) musi być większy od 0 i liczbą całkowitą" );
         if(simulationDto.Ts() < 1) errors.add("Czas symulacji (w dniach) musi być większy od 0 i liczbą całkowitą");
