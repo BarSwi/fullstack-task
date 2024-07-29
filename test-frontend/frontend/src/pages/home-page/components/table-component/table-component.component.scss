@@ -2,6 +2,8 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
     overflow: auto;
     table{
         width: 100%;
@@ -19,6 +21,10 @@
                 background-color: rgb(220, 238, 245);
             }
         }
+    }
+
+    #add-btn-container{
+        margin: 20px 0 10px 0;
     }
 
 

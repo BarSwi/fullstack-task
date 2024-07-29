@@ -1,6 +1,8 @@
 import { Result } from "./result"
 
+
 export interface BaseSimulation {
+    [key: string]: any,
     ID: number;
     N: string;
     P: number;
@@ -17,3 +19,6 @@ export interface Simulation extends BaseSimulation{}
 export interface SimulationWithResults extends BaseSimulation{
     Results: Result[]
 }
+
+export type SimulationWithoutID = Omit<BaseSimulation, 'ID'>;
+

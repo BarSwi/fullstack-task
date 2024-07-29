@@ -25,7 +25,7 @@ export function checkIfNumber(): ValidatorFn{
 
 export function checkMinimumValue(minValue: number): ValidatorFn{
     return (control: AbstractControl): ValidationErrors | null => {
-        if (control.value === null || control.value === undefined || control.value === '') {
+        if (control.value === null || control.value === undefined || control.value === '' || isNaN(control.value)) {
             return null;
         }
         return control.value >= minValue ? null : {'minValueError': true} ;

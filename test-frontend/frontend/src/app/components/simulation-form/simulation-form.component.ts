@@ -1,13 +1,14 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import {MatInputModule} from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { Simulation } from '../../services/models/simulation';
+import { Simulation, SimulationWithoutID } from '../../services/models/simulation';
 import { FormType } from '../../enums/form-type.enum';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { checkIfNumber, checkMaximumValue, checkMinimumValue, compareFields, nameNotEmpty } from '../../../Utils/form-validator';
 import { CommonModule } from '@angular/common';
+import { ApiService } from '../../services/api/api-service';
 
 @Component({
   selector: 'app-simulation-form',
@@ -19,9 +20,13 @@ import { CommonModule } from '@angular/common';
 export class SimulationFormComponent {
   @Input() simulation? : Simulation;
   @Input() formType : FormType = FormType.CREATE;
+  @Output() formSuccess = new EventEmitter<any>();
+  @Output() formError = new EventEmitter<any>();
+  @Output() closeForm = new EventEmitter();
   FormType = FormType;
-
   form!: FormGroup;
+  
+  private readonly api = inject(ApiService);
 
   fb = inject(FormBuilder);
   defaultValues = {
@@ -37,7 +42,6 @@ export class SimulationFormComponent {
   ngOnInit(){
     this.setDefaultValues();
     this.initializeForm();
-
   }
 
   setDefaultValues(){
@@ -55,7 +59,7 @@ export class SimulationFormComponent {
 
   initializeForm(){
     this.form=this.fb.group({
-      name: [this.defaultValues.N, [nameNotEmpty()]],
+      N: [this.defaultValues.N, [nameNotEmpty()]],
       P: [this.defaultValues.P, [checkIfNumber(), checkMinimumValue(1)]],
       I: [this.defaultValues.I, [checkIfNumber(), checkMinimumValue(1)]],
       R: [this.defaultValues.R, [checkIfNumber(), checkMinimumValue(1)]],
@@ -69,10 +73,27 @@ export class SimulationFormComponent {
   }
 
   handleForm(){
-
+    if(this.form.valid){
+      const jsonObject : SimulationWithoutID = this.createObjectBasedOnForm(this.form); 
+      this.api.createSimulation(jsonObject).subscribe({
+        next: (response: Simulation) => {
+          this.formSuccess.emit(response);
+        },
+        error: (err) => {
+          this.formError.emit(err);
+        }
+      });
+    }
   }
 
-  test(){
-    console.log(this.form.get('Tm'));
+  createObjectBasedOnForm(form: FormGroup): SimulationWithoutID {
+    return Object.keys(form.controls).reduce((acc, key) => {
+      acc[key as keyof SimulationWithoutID] = form.get(key)?.value;
+      return acc;
+    }, {} as SimulationWithoutID);
+  }
+
+  cancelForm(){
+    this.closeForm.emit();
   }
 }

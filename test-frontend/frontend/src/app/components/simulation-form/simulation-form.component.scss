@@ -22,7 +22,7 @@
         margin-bottom: 15px;
     }
     .mat-mdc-unelevated-button{
-        width: 50%;
+        width: 45%;
         padding: 10px 0;
         &:not(:disabled){
             background-color: rgb(119, 119, 184);
@@ -36,5 +36,16 @@
 
     .mat-mdc-form-field-error{
         padding-bottom: 10px;
+    }
+
+    #form-btns{
+        display: flex;
+        justify-content: space-evenly;
+        width: 100%;
+        gap: 10px;
+
+        .cancel-btn{
+            background-color: rgb(235, 134, 134);
+        }
     }
 }

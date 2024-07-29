@@ -3,11 +3,11 @@
         <div id="title">{{ formType == FormType.CREATE ? "Stwórz symulacje" : "Edytuj symulacje"}}</div>
         <mat-form-field>
             <mat-label>Nazwa</mat-label>
-            <input required matInput formControlName="name">
-            <mat-error *ngIf="form.get('name')?.hasError('required')">
+            <input required matInput formControlName="N">
+            <mat-error *ngIf="form.get('N')?.hasError('required')">
                 Nazwa jest wymagana
             </mat-error>
-            <mat-error *ngIf="form.get('name')?.hasError('nameWhitespace')">
+            <mat-error *ngIf="form.get('N')?.hasError('nameWhitespace')">
                 Nazwa nie może być białymi znakami
             </mat-error>
         </mat-form-field>
@@ -113,7 +113,7 @@
             </mat-error>
         </mat-form-field>
 
-        <mat-form-field (click)="test()">
+        <mat-form-field>
             <mat-label>Czas symulacji w dniach (Ts)</mat-label>
             <input required matInput min="1" type="number" formControlName="Ts">
             <mat-hint>Liczba większa od 0</mat-hint>
@@ -127,7 +127,11 @@
                 Ts musi być większe od 0
             </mat-error>
         </mat-form-field>
-        <button type="submit" mat-flat-button [disabled]="form.invalid">{{formType == FormType.CREATE ? "Utwórz symulację" : "Zapisz Zmiany"}}</button>
+        <div id="form-btns">
+            <button (click)="cancelForm()" mat-flat-button class="cancel-btn">Anuluj</button>
+            <button type="submit" mat-flat-button [disabled]="form.invalid">{{formType == FormType.CREATE ? "Utwórz symulację" : "Zapisz Zmiany"}}</button>
+        </div>
+
     </form>
 
 </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { TableComponentComponent } from './components/table-component/table-component.component';
 import { OptionModalComponent } from './components/option-modal/option-modal.component';
 import { Simulation } from '../../app/services/models/simulation';
@@ -15,6 +15,7 @@ import { SimulationFormComponent } from '../../app/components/simulation-form/si
   animations: [fadeIn]
 })
 export class HomePageComponent {
+  @ViewChild(TableComponentComponent) tableComponent!: TableComponentComponent;
   selectedSimulation? :Simulation;
   showCreationForm: boolean = false;
 
@@ -23,5 +24,22 @@ export class HomePageComponent {
   }
   resetSelection(){
     this.selectedSimulation = undefined;
+  }
+
+  handleFormSuccess(simulation: Simulation){
+    this.showCreationForm = false;
+    this.tableComponent.addSimulation(simulation);
+  }
+
+  deleteSimulation(simulation: Simulation){
+    this.tableComponent.deleteSimulation(simulation);
+    this.selectedSimulation=undefined;
+  }
+
+  openForm() : void{
+    this.showCreationForm=true;
+  }
+  closeForm() : void{
+    this.showCreationForm=false;
   }
 }
