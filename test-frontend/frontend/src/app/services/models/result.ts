@@ -1,6 +1,6 @@
 export interface Result{
-    Pi: number,
-    Pv: number,
-    Pm: number,
-    Pr: number,
+    pi: number,
+    pv: number,
+    pm: number,
+    pr: number,
 }

@@ -1,1 +1,20 @@
-<p>details-page works!</p>
+@if (!loaded){
+    <app-loader-component></app-loader-component>
+}
+@else if (loaded && simulation){
+    <div id = "daily-result-container">
+        <div *ngFor="let result of simulation['results']; let i = index" class = "daily-result-card">
+            <h3>Dzień {{i+1}}</h3>
+            <app-daily-card [result]="result">
+    
+            </app-daily-card>
+            <div class="divider">
+                <div class="divider-mask">
+                
+                </div>
+            </div>
+        </div>
+    
+    </div>
+}
+

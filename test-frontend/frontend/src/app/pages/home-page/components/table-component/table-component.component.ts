@@ -2,15 +2,15 @@ import {Component, EventEmitter, inject, Input, Output, ViewChild } from '@angul
 import { Simulation } from '../../../../services/models/simulation';
 import { ApiService } from '../../../../services/api/api-service';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFabButton } from '@angular/material/button';
+import { LoaderComponentComponent } from '../../../../components/loader-component/loader-component.component';
 
 @Component({
   selector: 'app-table-component',
   standalone: true,
-  imports: [MatTableModule, MatProgressSpinnerModule, CommonModule, MatIconModule, MatFabButton  ],
+  imports: [MatTableModule, CommonModule, MatIconModule, MatFabButton, LoaderComponentComponent  ],
   templateUrl: './table-component.component.html',
   styleUrl: './table-component.component.scss'
 })

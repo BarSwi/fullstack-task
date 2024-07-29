@@ -1,0 +1,23 @@
+<div id="daily-result-container">
+    <div id ="bar-chart">
+        <ngx-charts-bar-vertical
+        [results]="transformedData"
+        [scheme]="colorScheme"
+        [xAxis]="true"
+        [yAxis]="true"
+        [showXAxisLabel]="true"
+        >
+        </ngx-charts-bar-vertical>
+    </div>
+
+    <div id = "card-chart">
+        <ngx-charts-number-card
+        [scheme]="colorScheme"
+        [results]="transformedData"
+        [cardColor]="cardColor"
+        >
+        </ngx-charts-number-card>
+    </div>
+
+</div>
+

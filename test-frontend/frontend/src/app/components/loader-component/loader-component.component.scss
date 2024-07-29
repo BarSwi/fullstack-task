@@ -1,0 +1,9 @@
+mat-spinner{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+::ng-deep .custom-spinner circle {
+    stroke: rgb(104, 98, 194);
+}

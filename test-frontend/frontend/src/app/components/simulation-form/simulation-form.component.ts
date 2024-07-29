@@ -1,9 +1,9 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import {MatInputModule} from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { Simulation, SimulationWithoutID } from '../../services/models/simulation';
 import { FormType } from '../../enums/form-type.enum';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { checkIfNumber, checkMaximumValue, checkMinimumValue, compareFields, nameNotEmpty } from '../../Utils/form-validator';
@@ -63,7 +63,7 @@ export class SimulationFormComponent {
       P: [this.defaultValues.P, [checkIfNumber(), checkMinimumValue(1)]],
       I: [this.defaultValues.I, [checkIfNumber(), checkMinimumValue(1)]],
       R: [this.defaultValues.R, [checkIfNumber(), checkMinimumValue(1), checkMaximumValue(2147483646)]],
-      M: [this.defaultValues.M, [checkIfNumber(), checkMinimumValue(0), checkMaximumValue(1)]],
+      M: [this.defaultValues.M, [checkIfNumber(), checkMinimumValue(0), checkMaximumValue(1.1)]],
       Ti: [this.defaultValues.Ti, [checkIfNumber(), checkMinimumValue(2), checkMaximumValue(2147483646)]],
       Tm: [this.defaultValues.Tm, [checkIfNumber(), checkMinimumValue(1), checkMaximumValue(2147483646)]],
       Ts: [this.defaultValues.Ts, [checkIfNumber(), checkMinimumValue(1), checkMaximumValue(2147483646)]],

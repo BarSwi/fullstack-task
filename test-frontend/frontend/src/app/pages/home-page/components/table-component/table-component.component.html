@@ -1,7 +1,7 @@
 
 <div id="data-table">
     @if(loading){
-        <mat-spinner class="custom-spinner"></mat-spinner>
+        <app-loader-component></app-loader-component>
     }
     @else if (!loading && error==false){
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
