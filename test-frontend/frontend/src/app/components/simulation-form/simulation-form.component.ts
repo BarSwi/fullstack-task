@@ -6,7 +6,7 @@ import { FormType } from '../../enums/form-type.enum';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { checkIfNumber, checkMaximumValue, checkMinimumValue, compareFields, nameNotEmpty } from '../../../Utils/form-validator';
+import { checkIfNumber, checkMaximumValue, checkMinimumValue, compareFields, nameNotEmpty } from '../../Utils/form-validator';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api/api-service';
 

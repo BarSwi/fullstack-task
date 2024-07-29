@@ -3,7 +3,7 @@
 @if (showCreationForm){
     <span id = "simulation-form-container"></span>
     <div id="simulation-form-popup">
-        <app-simulation-form (formSuccess)="handleFormSuccess($event)" (closeForm)="closeForm()"></app-simulation-form>
+        <app-simulation-form (formSuccess)="handleFormSuccess($event)" (formError)="handleFormError($event)" (closeForm)="closeForm()"></app-simulation-form>
     </div>
 }
 

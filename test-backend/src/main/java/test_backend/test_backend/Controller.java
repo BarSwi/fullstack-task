@@ -34,4 +34,9 @@ public class Controller {
     SimulationDto editSimulation(@RequestParam long id, @RequestBody SimulationDto requestDto){
         return simulationService.editSimulation(id, requestDto);
     }
+
+    @GetMapping("simulation/getSimulation")
+    Simulation getSimulation(@RequestParam long id){
+        return simulationService.getSimulation(id).orElse(null);
+    }
 }

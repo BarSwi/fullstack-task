@@ -1,6 +1,6 @@
 import {Component, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
-import { Simulation } from '../../../../app/services/models/simulation';
-import { ApiService } from '../../../../app/services/api/api-service';
+import { Simulation } from '../../../../services/models/simulation';
+import { ApiService } from '../../../../services/api/api-service';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';

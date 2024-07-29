@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { TableComponentComponent } from './components/table-component/table-component.component';
 import { OptionModalComponent } from './components/option-modal/option-modal.component';
-import { Simulation } from '../../app/services/models/simulation';
+import { Simulation } from '../../services/models/simulation';
 import { fadeIn } from '../../Utils/animations';
-import { SimulationFormComponent } from '../../app/components/simulation-form/simulation-form.component';
+import { SimulationFormComponent } from '../../components/simulation-form/simulation-form.component';
 
 
 @Component({
@@ -29,6 +29,10 @@ export class HomePageComponent {
   handleFormSuccess(simulation: Simulation){
     this.showCreationForm = false;
     this.tableComponent.addSimulation(simulation);
+  }
+
+  handleFormError(error: any){
+    this.showCreationForm=false;
   }
 
   deleteSimulation(simulation: Simulation){

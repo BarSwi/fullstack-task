@@ -1,5 +1,6 @@
 package test_backend.test_backend.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +19,8 @@ public class DailyResult {
     private long Pm;
     private long Pr;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "simulation_id")
+    @JsonBackReference
     private Simulation simulation;
 }

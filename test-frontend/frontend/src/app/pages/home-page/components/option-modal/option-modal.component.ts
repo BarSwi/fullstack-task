@@ -1,7 +1,7 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { Simulation } from '../../../../app/services/models/simulation';
-import { ApiService } from '../../../../app/services/api/api-service';
+import { Simulation } from '../../../../services/models/simulation';
+import { ApiService } from '../../../../services/api/api-service';
 
 @Component({
   selector: 'app-option-modal',

@@ -37,6 +37,10 @@ public class SimulationService {
                 .toList();
     }
 
+    public Optional<Simulation> getSimulation(long id){
+        return simulationRepository.findById(id);
+    }
+
     public void deleteSimulation(long id){
         simulationRepository.deleteByID(id);
     }

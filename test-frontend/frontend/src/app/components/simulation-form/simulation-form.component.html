@@ -140,7 +140,7 @@
             </mat-error>
         </mat-form-field>
         <div id="form-btns">
-            <button (click)="cancelForm()" mat-flat-button class="cancel-btn">Anuluj</button>
+            <button type="button" (click)="cancelForm()" mat-flat-button class="cancel-btn">Anuluj</button>
             <button type="submit" mat-flat-button [disabled]="form.invalid">{{formType == FormType.CREATE ? "Utwórz symulację" : "Zapisz Zmiany"}}</button>
         </div>
 
