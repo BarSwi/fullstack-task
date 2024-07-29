@@ -4,6 +4,7 @@ import { OptionModalComponent } from './components/option-modal/option-modal.com
 import { Simulation } from '../../services/models/simulation';
 import { fadeIn } from '../../Utils/animations';
 import { SimulationFormComponent } from '../../components/simulation-form/simulation-form.component';
+import { CommonModule } from '@angular/common';
 
 
 @Component({

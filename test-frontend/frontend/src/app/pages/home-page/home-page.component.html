@@ -1,5 +1,5 @@
 <app-table-component  (rowClicked)="onRowClicked($event)" (openForm)="openForm()" [selectedSimulation]="selectedSimulation"></app-table-component>
-@if (selectedSimulation){ <app-option-modal (cancelClicked)="resetSelection()" (deleteSimulation)="deleteSimulation($event)" [selectedSimulation]="selectedSimulation" @fadeIn></app-option-modal> } 
+@if (selectedSimulation){ <span class="separator"></span><app-option-modal (cancelClicked)="resetSelection()" (deleteSimulation)="deleteSimulation($event)" [selectedSimulation]="selectedSimulation" @fadeIn></app-option-modal> } 
 @if (showCreationForm){
     <span id = "simulation-form-container"></span>
     <div id="simulation-form-popup">
