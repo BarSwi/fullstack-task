@@ -28,11 +28,6 @@ export class EditSimulationComponent {
   }
 
   initializeSimulation():void{
-    const navigation = this.router.getCurrentNavigation();
-    if(navigation && navigation.extras.state){
-      this.simulation = navigation.extras.state['simulation'];
-    }
-
     if(!this.simulation){
       this.api.getSimulation(this.simulationId).subscribe({
         next: (response: Simulation) => {
@@ -41,6 +36,7 @@ export class EditSimulationComponent {
         },
         error: (err) => {
           console.log(err);
+          this.loaded=true;
         },
         complete: () =>{
           this.loaded=true;
@@ -55,7 +51,7 @@ export class EditSimulationComponent {
   initializeId():void{
     this.simulationId = this.route.snapshot.paramMap.get('id');
     const numericId = parseInt(this.simulationId, 10);
-    if(!this.simulationId && isNaN(numericId)) this.router.navigate(['/']);
+    if(!this.simulationId || isNaN(numericId)) this.router.navigate(['/']);
   }
 
   cancelEdit(): void{
