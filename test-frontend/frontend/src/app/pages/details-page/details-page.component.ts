@@ -5,17 +5,18 @@ import { ApiService } from '../../services/api/api-service';
 import { DailyCardComponent } from './components/daily-card/daily-card.component';
 import { CommonModule } from '@angular/common';
 import { LoaderComponentComponent } from '../../components/loader-component/loader-component.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 @Component({
   selector: 'app-details-page',
   standalone: true,
-  imports: [DailyCardComponent, CommonModule, LoaderComponentComponent],
+  imports: [DailyCardComponent, CommonModule, LoaderComponentComponent, FooterComponent],
   templateUrl: './details-page.component.html',
   styleUrl: './details-page.component.scss'
 })
 export class DetailsPageComponent {
-  simulation!: SimulationWithResults
+  simulation?: any
   loaded: boolean = false;
 
   private readonly route = inject(ActivatedRoute);
@@ -33,6 +34,7 @@ export class DetailsPageComponent {
     this.api.getSimulation(id).subscribe({
       next: (response: SimulationWithResults) => {
         this.simulation = response;
+        if(this.simulation === null) this.router.navigate(['/']);
       },
       error: (err) => {
         console.log(err);
@@ -46,5 +48,9 @@ export class DetailsPageComponent {
   validateId(id: any):void{
     const parsedId = parseInt(id, 10);
     if(isNaN(parsedId)) this.router.navigate(['/']);
+  }
+
+  editSimulation():void{
+    this.router.navigate([`/edytuj-symulacje/${this.simulation?.id}`]);
   }
 }

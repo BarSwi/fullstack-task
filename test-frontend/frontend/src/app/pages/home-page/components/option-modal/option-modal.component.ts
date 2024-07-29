@@ -2,6 +2,7 @@ import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { Simulation } from '../../../../services/models/simulation';
 import { ApiService } from '../../../../services/api/api-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-option-modal',
@@ -16,6 +17,7 @@ export class OptionModalComponent {
   @Output() deleteSimulation = new EventEmitter<Simulation>();
 
   private readonly api = inject(ApiService);
+  private readonly router = inject(Router);
 
   onCancelClick(){
     this.cancelClicked.emit();
@@ -32,5 +34,9 @@ export class OptionModalComponent {
         console.log(err);
       }
     });
+  }
+
+  navigateToDetails(): void{
+    this.router.navigate([`/szczegóły-symulacji/${this.selectedSimulation?.ID}`])
   }
 }

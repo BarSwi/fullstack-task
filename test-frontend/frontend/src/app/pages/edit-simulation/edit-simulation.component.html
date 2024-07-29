@@ -1,0 +1,10 @@
+<div id = "edit-form-container">
+    @if (loaded){
+        <app-simulation-form (formSuccess)="editSuccess()" (closeForm)="cancelEdit()" [simulation]="simulation" [formType]="FormType">
+        </app-simulation-form>
+    }
+    @else{
+        <app-loader-component></app-loader-component>
+    }
+
+</div>

@@ -42,6 +42,7 @@ export class HomePageComponent {
 
   openForm() : void{
     this.showCreationForm=true;
+    this.selectedSimulation=undefined;
   }
   closeForm() : void{
     this.showCreationForm=false;

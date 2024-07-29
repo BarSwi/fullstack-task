@@ -1,30 +1,49 @@
-.daily-result-card{
-    h3{
-        text-align: center;
-        font-weight: bold;
-        padding-top: 50px;
-    }
+#daily-result-container{
+    margin-bottom: 100px;
 
-    .divider {
-        margin:80px auto;
-        width: 90%; 
-        max-width: 100%;
-        position:relative;
-      }
-      
-    .divider-mask { 
-        overflow:hidden; height:20px; 
+    .daily-result-card{
+        h3{
+            text-align: center;
+            font-weight: bold;
+        }
+    
+        .divider {
+            margin:80px auto;
+            width: 90%; 
+            max-width: 100%;
+            position:relative;
+          }
+          
+        .divider-mask { 
+            overflow:hidden; 
+            height:20px; 
+        }
+        
+        .divider-mask:after { 
+            content:''; 
+            display:block; margin:-25px auto 0;
+            width:100%; height:25px;  
+            border-radius:125px / 12px;
+            box-shadow:0 0 8px #049372;
+        }
+    
+        &:last-child .divider{
+            display: none;
+        }
+
+        .details-charts{
+            margin-top:50px;
+        }
     }
     
-    .divider-mask:after { 
-        content:''; 
-        display:block; margin:-25px auto 0;
-        width:100%; height:25px;  
-        border-radius:125px / 12px;
-        box-shadow:0 0 8px #049372;
-    }
+}
 
-    &:last-child .divider{
-        display: none;
-    }
+#footer-component{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    box-sizing: border-box;
+    padding: 20px;
 }

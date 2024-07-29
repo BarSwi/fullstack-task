@@ -23,6 +23,7 @@
     }
     .mat-mdc-unelevated-button{
         width: 45%;
+        max-width: 250px;
         padding: 10px 0;
         &:not(:disabled){
             background-color: rgb(119, 119, 184);

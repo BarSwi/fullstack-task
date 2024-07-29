@@ -9,6 +9,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { checkIfNumber, checkMaximumValue, checkMinimumValue, compareFields, nameNotEmpty } from '../../Utils/form-validator';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api/api-service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-simulation-form',
@@ -18,7 +19,7 @@ import { ApiService } from '../../services/api/api-service';
   styleUrl: './simulation-form.component.scss',
 })
 export class SimulationFormComponent {
-  @Input() simulation? : Simulation;
+  @Input() simulation? : any;
   @Input() formType : FormType = FormType.CREATE;
   @Output() formSuccess = new EventEmitter<any>();
   @Output() formError = new EventEmitter<any>();
@@ -46,14 +47,14 @@ export class SimulationFormComponent {
 
   setDefaultValues(){
     if(this.simulation){
-      this.defaultValues.N = this.simulation.N;
-      this.defaultValues.P = this.simulation.P;
-      this.defaultValues.I = this.simulation.I;
-      this.defaultValues.R = this.simulation.R;
-      this.defaultValues.M = this.simulation.M;
-      this.defaultValues.Ti = this.simulation.Ti;
-      this.defaultValues.Tm = this.simulation.Tm;
-      this.defaultValues.Ts = this.simulation.Ts;
+      this.defaultValues.N = this.simulation.n;
+      this.defaultValues.P = this.simulation.p;
+      this.defaultValues.I = this.simulation.i;
+      this.defaultValues.R = this.simulation.r;
+      this.defaultValues.M = this.simulation.m;
+      this.defaultValues.Ti = this.simulation.ti;
+      this.defaultValues.Tm = this.simulation.tm;
+      this.defaultValues.Ts = this.simulation.ts;
     }
   }
 
@@ -73,19 +74,27 @@ export class SimulationFormComponent {
   }
 
   handleForm(){
-    if(this.form.valid){
-      const jsonObject : SimulationWithoutID = this.createObjectBasedOnForm(this.form); 
-      this.api.createSimulation(jsonObject).subscribe({
-        next: (response: Simulation) => {
-          this.formSuccess.emit(response);
-        },
-        error: (err) => {
-          this.formError.emit(err);
-        }
-      });
-    }
+    if(this.form.invalid) return;
+    
+    const jsonObject : SimulationWithoutID = this.createObjectBasedOnForm(this.form); 
+    const observable = this.formType === FormType.CREATE ? this.api.createSimulation(jsonObject) : this.api.editSimulation(this.simulation.id, jsonObject);
+
+    this.handleFormSubmission(observable);
+
   }
 
+  private handleFormSubmission(observable: Observable<Simulation>): void {
+    observable.subscribe({
+      next: (response: Simulation) => {
+        this.formSuccess.emit(response);
+      },
+      error: (err) => {
+        this.formError.emit(err);
+      }
+    });
+  }
+
+  
   createObjectBasedOnForm(form: FormGroup): SimulationWithoutID {
     return Object.keys(form.controls).reduce((acc, key) => {
       acc[key as keyof SimulationWithoutID] = form.get(key)?.value;

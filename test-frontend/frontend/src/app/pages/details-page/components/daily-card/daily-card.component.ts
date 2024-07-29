@@ -19,29 +19,8 @@ export class DailyCardComponent {
   previousWindowWidth: number = window.innerWidth;
 
 
-  // @HostListener('window:resize', ['$event'])
-  // onResize(event: Event) :void{
-  //     this.windowWidth = (event.target as Window).innerWidth;
-  //     if(this.windowWidth <= 1000  && this.previousWindowWidth > 1000) this.viewCard = [500,300];
-  //     else if(this.windowWidth >=1000 && this.previousWindowWidth < 1000) this.viewCard = [400,250];
-  //     else if(this.windowWidth <=600 && this.previousWindowWidth > 600){
-  //       this.viewBar = [350,200];
-  //       this.viewCard = [350, 200];
-  //     }
-  //     else if(this.windowWidth > 600 && this.previousWindowWidth <= 600){
-  //       this.viewCard = [400,250];
-  //       this.viewBar = [600,300];
-  //     }
-  //     this.previousWindowWidth = this.windowWidth;
-  // }
-
-  // setDefaultViewValues() :void{
-  //   if(this.previousWindowWidth <= 1000) this.viewCard = [500,300];
-  // }
-
   ngOnInit(){
     this.initializeData();
-    //this.setDefaultViewValues();
   }
   colorScheme: Color = {
     name: 'basicScheme',
