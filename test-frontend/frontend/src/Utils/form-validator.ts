@@ -35,7 +35,7 @@ export function checkMinimumValue(minValue: number): ValidatorFn{
 
 export function checkMaximumValue(maxValue: number): ValidatorFn{
     return (control: AbstractControl): ValidationErrors | null => {
-        if (control.value === null || control.value === undefined || control.value === '') {
+        if (control.value === null || control.value === undefined || control.value === '' || isNaN(control.value)) {
             return null;
         }
         return control.value < maxValue ? null : {'maxValueError': true} ;
@@ -46,15 +46,27 @@ export function compareFields(Ti: string, Tm: string): ValidatorFn{
     return (control: AbstractControl): ValidationErrors | null => {
         const TiValue = control.get(Ti)?.value;
         const TmValue = control.get(Tm)?.value;
-
         if (TmValue === null || TmValue === undefined || TmValue === '' || TiValue === null || TiValue === undefined || TiValue === '') {
             return null;
         }
+        
         const valid = TmValue < TiValue;
-
-
-        control.get(Tm)?.setErrors(valid ? null : {TmLowerThanTiError: true});
-        control.get(Ti)?.setErrors(valid ? null : {TmLowerThanTiError: true});       
+        if(!valid){
+            control.get(Tm)?.setErrors({ TmLowerThanTiError: true });
+            control.get(Ti)?.setErrors({ TmLowerThanTiError: true });
+        }
+        else{
+            compareFieldsHelper(control.get(Tm), 'TmLowerThanTiError');
+            compareFieldsHelper(control.get(Ti), 'TmLowerThanTiError');
+        }
         return null;
+    }
+}
+
+function compareFieldsHelper(control: AbstractControl | null, errorKey: string): void {
+    if (control) {
+        const errors = control.errors ? { ...control.errors } : {};
+        delete errors[errorKey];
+        control.setErrors(Object.keys(errors).length ? errors : null);
     }
 }

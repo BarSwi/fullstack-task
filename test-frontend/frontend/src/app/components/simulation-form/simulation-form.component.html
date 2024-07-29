@@ -55,6 +55,9 @@
             <mat-error *ngIf="form.get('R')?.hasError('minValueError')">
                 R musi być większe od 0
             </mat-error>
+            <mat-error *ngIf="form.get('R')?.hasError('maxValueError')">
+                R musi być mniejsze od 2147483646
+            </mat-error>
         </mat-form-field>
 
         <mat-form-field>
@@ -88,10 +91,13 @@
             <mat-error *ngIf="form.get('Ti')?.hasError('minValueError')">
                 Ti musi być większe od 1 (ze względu na Tm)
             </mat-error>
+            <mat-error *ngIf="form.get('Ti')?.hasError('maxValueError')">
+                Ti musi być mniejsze od 2147483646
+            </mat-error>
 
             <!-- Notatka dla mnie -> mat-error działa TYLKO na specyficzne pola nie na cały formularz -->
             <mat-error *ngIf="form.get('Ti')?.hasError('TmLowerThanTiError')">
-                Tm musi być większe od Ti
+                Tm musi być mniejsze od Ti
             </mat-error>
         </mat-form-field>
 
@@ -109,7 +115,10 @@
                 Tm musi być większe od 0
             </mat-error>
             <mat-error *ngIf="form.get('Tm')?.hasError('TmLowerThanTiError')">
-                Tm musi być większe od Ti
+                Tm musi być mniejsze od Ti
+            </mat-error>
+            <mat-error *ngIf="form.get('Tm')?.hasError('maxValueError')">
+                Tm musi być mniejsze od 2147483646
             </mat-error>
         </mat-form-field>
 
@@ -125,6 +134,9 @@
             </mat-error>
             <mat-error *ngIf="form.get('Ts')?.hasError('minValueError')">
                 Ts musi być większe od 0
+            </mat-error>
+            <mat-error *ngIf="form.get('Ts')?.hasError('maxValueError')">
+                Ts musi być mniejsze od 2147483646
             </mat-error>
         </mat-form-field>
         <div id="form-btns">
