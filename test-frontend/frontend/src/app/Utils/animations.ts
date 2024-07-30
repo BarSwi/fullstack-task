@@ -7,6 +7,7 @@ export const fadeIn = trigger('fadeIn', [
     transition(':enter', [
       animate('200ms ease-out', style({
         opacity: 1,
+
       }))
     ]),
     transition(':leave', [

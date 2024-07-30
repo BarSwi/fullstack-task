@@ -12,10 +12,12 @@
     bottom: 5%;
     left: 50%;
     z-index: 10;
-    transform: translateX(-50%);
+    transform: translate(-50%);
+    margin: auto;
     -webkit-box-shadow: 1px 1px 10px 0px rgba(66, 68, 90, 1);
     -moz-box-shadow: 1px 1px 10px 0px rgba(66, 68, 90, 1);
     box-shadow: 1px 1px 10px 0px rgba(66, 68, 90, 1);
+    animation: slideFromBottom 200ms ease-out;
 
     button{
         text-wrap: wrap;
@@ -30,6 +32,16 @@
         }
     }
 
+}
+
+// Ciężko połączyć angular animations z position fixed wycentrowanym, dodatkowo translateY ma problemy. Z tego powodu używam natywnej animacji do translate.
+@keyframes slideFromBottom {
+    from {
+        transform: translate(-50%, 150%);
+    }
+    to {
+        transform: translate(-50%, 0);
+    }
 }
 
 @media (max-width: 700px){
