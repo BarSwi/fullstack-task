@@ -1,6 +1,7 @@
 #simulation-form{
-    
     width: 100%;
+    max-height: 90vh;
+    overflow: auto;
     form{
         display: flex;
         flex-direction: column;
@@ -8,7 +9,7 @@
     }
     #title{
         font-size: 1.2rem;
-        margin-bottom: 25px;
+        margin-bottom: 15px;
         font-weight: bold;
     }
     mat-form-field{
@@ -19,7 +20,7 @@
         }
     }
     .button{
-        margin-bottom: 15px;
+        margin-bottom: 10px;
     }
     .mat-mdc-unelevated-button{
         width: 45%;
