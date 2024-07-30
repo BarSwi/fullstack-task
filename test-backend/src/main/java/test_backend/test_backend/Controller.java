@@ -1,8 +1,10 @@
 package test_backend.test_backend;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.filter.RequestContextFilter;
+import org.springframework.web.servlet.view.RedirectView;
 import test_backend.test_backend.Dto.SimulationDto;
 import test_backend.test_backend.Entities.Simulation;
 import test_backend.test_backend.Services.SimulationService;
@@ -38,5 +40,12 @@ public class Controller {
     @GetMapping("simulation/getSimulation")
     Simulation getSimulation(@RequestParam long id){
         return simulationService.getSimulation(id).orElse(null);
+    }
+
+    // Prowizoryczny endpoint w celu ujednolicenia ścieżek dokumentacji.
+    @Hidden
+    @GetMapping("/api-docs")
+    public RedirectView redirectToSwaggerUi() {
+        return new RedirectView("/swagger-ui.html");
     }
 }

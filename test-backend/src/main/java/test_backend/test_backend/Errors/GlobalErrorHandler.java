@@ -16,4 +16,10 @@ public class GlobalErrorHandler {
         return new ValidationErrorResponseDto("Błąd walidacji", validationErrorsCombined.getErrors());
     }
 
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(RuntimeException.class)
+    String handleGenericException(RuntimeException ex) {
+        return "An error occurred" + ex.getMessage();
+    }
+
 }
