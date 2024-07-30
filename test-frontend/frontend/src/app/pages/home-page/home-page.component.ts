@@ -34,14 +34,14 @@ export class HomePageComponent {
     this.showCreationForm = false;
     this.tableComponent.addSimulation(simulation);
     this.showFormOutcomeInformation=true;
-    this.resetFormOutcomeInformation();
+    this.resetFormOutcomeInformationTimer();
   }
 
   handleFormError(error: HttpErrorResponse){
     this.showCreationForm=false;
     this.formError = error;
     this.showFormOutcomeInformation=true;
-    this.resetFormOutcomeInformation();
+    this.resetFormOutcomeInformationTimer();
     
   }
 
@@ -53,15 +53,22 @@ export class HomePageComponent {
   openForm() : void{
     this.showCreationForm=true;
     this.selectedSimulation=undefined;
+
+    this.resetFormOutcomeInformation();
   }
   closeForm() : void{
     this.showCreationForm=false;
   }
 
-  resetFormOutcomeInformation(): void{
+  resetFormOutcomeInformationTimer(): void{
     setTimeout(() => {
       this.formError = undefined;
       this.showFormOutcomeInformation = false;
     }, 2000);
+  }
+
+  resetFormOutcomeInformation():void{
+    this.formError=undefined;
+    this.showFormOutcomeInformation=false;
   }
 }

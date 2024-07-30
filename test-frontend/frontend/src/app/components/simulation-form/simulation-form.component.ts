@@ -21,9 +21,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class SimulationFormComponent {
   @Input() simulation? : any;
+  @Input() blocked: boolean = false;
   @Input() formType : FormType = FormType.CREATE;
   @Output() formSuccess = new EventEmitter<any>();
-  @Output() formError = new EventEmitter<any>();
+  @Output() formError = new EventEmitter<HttpErrorResponse>();
   @Output() closeForm = new EventEmitter();
   FormType = FormType;
   form!: FormGroup;
@@ -76,7 +77,7 @@ export class SimulationFormComponent {
   }
 
   handleForm(){
-    if(this.form.invalid) return;
+    if(this.form.invalid || this.blocked) return;
     
     const jsonObject : SimulationWithoutID = this.createObjectBasedOnForm(this.form); 
     const observable = this.formType === FormType.CREATE ? this.api.createSimulation(jsonObject) : this.api.editSimulation(this.simulation.id, jsonObject);

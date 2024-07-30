@@ -1,6 +1,7 @@
 <div id = "edit-form-container">
+    @if (showFormOutcome){<app-form-outcome-information [successMessage]="successMessage" [error]="formError"></app-form-outcome-information>}
     @if (loaded){
-        <app-simulation-form (formSuccess)="editSuccess()" (closeForm)="cancelEdit()" [simulation]="simulation" [formType]="FormType">
+        <app-simulation-form [blocked]="blockForm" (formSuccess)="editSuccess()" (formError)="editError($event)" (closeForm)="cancelEdit()" [simulation]="simulation" [formType]="FormType">
         </app-simulation-form>
     }
     @else{

@@ -11,8 +11,9 @@ import { Component, Input } from '@angular/core';
 })
 export class FormOutcomeInformationComponent {
   @Input() error? :HttpErrorResponse;
+  @Input() successMessage?: string = "Z powodzeniem dodano nową symulację."
   errorMessage?: string
-  successMessage?: string = "Z powodzeniem dodano nową symulację."
+
 
   ngOnInit(){
     this.determineErrorMessage();

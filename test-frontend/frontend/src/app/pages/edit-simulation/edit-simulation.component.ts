@@ -5,19 +5,27 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../services/api/api-service';
 import { LoaderComponentComponent } from '../../components/loader-component/loader-component.component';
 import { FormType } from '../../enums/form-type.enum';
+import { FormOutcomeInformationComponent } from '../../components/form-outcome-information/form-outcome-information.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-edit-simulation',
   standalone: true,
-  imports: [SimulationFormComponent, LoaderComponentComponent],
+  imports: [SimulationFormComponent, LoaderComponentComponent, FormOutcomeInformationComponent],
   templateUrl: './edit-simulation.component.html',
-  styleUrl: './edit-simulation.component.scss'
+  styleUrl: './edit-simulation.component.scss',
 })
 export class EditSimulationComponent {
   simulation?: Simulation
   simulationId?: any
   loaded: boolean = false;
+  blockForm: boolean = false;
   FormType = FormType.EDIT
+
+  successMessage: string = "Edycja powiodła się! Przekierowywanie...";
+  formError?: HttpErrorResponse;
+
+  showFormOutcome: boolean = false;
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly api = inject(ApiService);
@@ -59,7 +67,23 @@ export class EditSimulationComponent {
   }
 
   editSuccess():void{
-    this.navigateToDetails();
+    this.formError = undefined;
+    this.showFormOutcome=true;
+    this.blockForm=true;
+
+    setTimeout(() => {
+      this.navigateToDetails();
+    }, 2000);
+  }
+  editError(error: HttpErrorResponse): void{
+    this.formError = error;
+    this.showFormOutcome = true;
+    this.blockForm=true;
+
+    setTimeout(() => {
+      this.blockForm=false;
+      this.showFormOutcome=false;
+    }, 2000);
   }
 
   navigateToDetails():void{
