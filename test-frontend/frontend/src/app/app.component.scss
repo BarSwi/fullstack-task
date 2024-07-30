@@ -28,9 +28,12 @@
         flex-direction: column;
     }
 
-    .col-1 {
+    .col {
         flex: 1;
         margin-bottom: 1rem;
+    }
+    .container{
+        width: 100vw;
     }
 }
   
