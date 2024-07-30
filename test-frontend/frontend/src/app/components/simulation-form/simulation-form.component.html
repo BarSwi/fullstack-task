@@ -1,6 +1,6 @@
 <div id = "simulation-form">
     <form [formGroup]="form" (submit)="handleForm()">
-        <div id="title">{{ formType == FormType.CREATE ? "Stwórz symulacje" : "Edytuj symulacje: "}} {{formType == FormType.EDIT? simulation?.n : ''}}</div>
+        <div id="title">{{ formType == FormType.CREATE ? "Stwórz symulacje" : "Edytuj symulacje: "}} <br/> {{formType == FormType.EDIT? simulation?.n : ''}}</div>
         <mat-form-field>
             <mat-label>Nazwa</mat-label>
             <input required matInput formControlName="N">
