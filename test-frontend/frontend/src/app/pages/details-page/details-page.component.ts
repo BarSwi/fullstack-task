@@ -38,6 +38,7 @@ export class DetailsPageComponent {
       },
       error: (err) => {
         console.log(err);
+        this.router.navigate(['/']);
       },
       complete: () =>{
         this.loaded=true;

@@ -12,6 +12,11 @@
             word-break: break-all;
             text-align: center;
         }
+
+        td:first-of-type{
+            max-width: 100px;
+            padding: 10px 5px;
+        }
         tr{
 
             &:hover{
@@ -27,5 +32,13 @@
         margin: 20px 0 10px 0;
     }
 
-
+    #table-data-error{
+        width: 100%;
+        height: 300px;
+        font-size: 2rem;
+        flex-direction: column;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }

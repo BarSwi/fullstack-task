@@ -6,10 +6,11 @@ import { FormType } from '../../enums/form-type.enum';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { checkIfNumber, checkMaximumValue, checkMinimumValue, compareFields, nameNotEmpty } from '../../Utils/form-validator';
+import { checkIfNumber, checkMaximumValue, checkMinimumValue, compareFieldsIP, compareFieldsTiTm, nameNotEmpty } from '../../Utils/form-validator';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../services/api/api-service';
 import { Observable } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-simulation-form',
@@ -28,11 +29,12 @@ export class SimulationFormComponent {
   form!: FormGroup;
   
   private readonly api = inject(ApiService);
+  readonly maxNumber = Number.MAX_SAFE_INTEGER;
 
   fb = inject(FormBuilder);
   defaultValues = {
     N: '',
-    P: 1,
+    P: 2,
     I: 1,
     R: 1,
     M: 0,
@@ -61,7 +63,7 @@ export class SimulationFormComponent {
   initializeForm(){
     this.form=this.fb.group({
       N: [this.defaultValues.N, [nameNotEmpty()]],
-      P: [this.defaultValues.P, [checkIfNumber(), checkMinimumValue(1)]],
+      P: [this.defaultValues.P, [checkIfNumber(), checkMinimumValue(1), checkMaximumValue(this.maxNumber)]],
       I: [this.defaultValues.I, [checkIfNumber(), checkMinimumValue(1)]],
       R: [this.defaultValues.R, [checkIfNumber(), checkMinimumValue(1), checkMaximumValue(2147483646)]],
       M: [this.defaultValues.M, [checkIfNumber(), checkMinimumValue(0), checkMaximumValue(1)]],
@@ -69,7 +71,7 @@ export class SimulationFormComponent {
       Tm: [this.defaultValues.Tm, [checkIfNumber(), checkMinimumValue(1), checkMaximumValue(2147483646)]],
       Ts: [this.defaultValues.Ts, [checkIfNumber(), checkMinimumValue(1), checkMaximumValue(2147483646)]],
     }, {
-      validators: compareFields('Ti', 'Tm')
+      validators: [compareFieldsTiTm('Tm', 'Ti'), compareFieldsIP('I','P')]
     });
   }
 
@@ -88,7 +90,7 @@ export class SimulationFormComponent {
       next: (response: Simulation) => {
         this.formSuccess.emit(response);
       },
-      error: (err) => {
+      error: (err : HttpErrorResponse) => {
         this.formError.emit(err);
       }
     });

@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { SimulationFormComponent } from '../../components/simulation-form/simulation-form.component';
-import { Simulation, SimulationWithoutID } from '../../services/models/simulation';
+import { Simulation } from '../../services/models/simulation';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../services/api/api-service';
 import { LoaderComponentComponent } from '../../components/loader-component/loader-component.component';
@@ -36,7 +36,7 @@ export class EditSimulationComponent {
         },
         error: (err) => {
           console.log(err);
-          this.loaded=true;
+          this.router.navigate(['/'])
         },
         complete: () =>{
           this.loaded=true;

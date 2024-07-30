@@ -1,0 +1,8 @@
+<div class = "form-outcome-container" [class.__error]="error" id = "form-outcome-container">
+    @if (error){
+        {{errorMessage}}
+    }
+    @else{
+        {{successMessage}}
+    }
+</div>

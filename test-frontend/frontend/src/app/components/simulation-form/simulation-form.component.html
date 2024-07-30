@@ -14,8 +14,8 @@
 
         <mat-form-field>
             <mat-label>Liczba ludności (P)</mat-label>
-            <input required  min="1" matInput formControlName="P">
-            <mat-hint>Liczba większa od 0</mat-hint>
+            <input required  min="2" matInput formControlName="P">
+            <mat-hint>Liczba większa od 1</mat-hint>
             <mat-error *ngIf="form.get('P')?.hasError('required')">
                 P jest wymagane
             </mat-error>
@@ -23,7 +23,13 @@
                 P musi być liczbą
             </mat-error>
             <mat-error *ngIf="form.get('P')?.hasError('minValueError')">
-                P musi być większe od 0
+                P musi być większe od 1 ze względu na I
+            </mat-error>
+            <mat-error *ngIf="form.get('P')?.hasError('maxValueError')">
+                P musi być mniejsze niż {{maxNumber}}
+            </mat-error>
+            <mat-error *ngIf="form.get('P')?.hasError('PLowerThanI')">
+                P musi być większe od I
             </mat-error>
         </mat-form-field>
 
@@ -37,8 +43,11 @@
             <mat-error *ngIf="form.get('I')?.hasError('notNumber')">
                 I musi być liczbą
             </mat-error>
-            <mat-error *ngIf="form.get('I   ')?.hasError('minValueError')">
+            <mat-error *ngIf="form.get('I')?.hasError('minValueError')">
                 I musi być większe od 0
+            </mat-error>
+            <mat-error *ngIf="form.get('I')?.hasError('PLowerThanI')">
+                P musi być większe od I
             </mat-error>
         </mat-form-field>
 
